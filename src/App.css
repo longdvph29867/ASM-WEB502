@@ -1,13 +1,19 @@
 header.show-mobile .menu-mobile {
-    max-height: 500px !important;
-    opacity: 1 !important;
-    visibility: visible;
+  max-height: 500px !important;
+  opacity: 1 !important;
+  visibility: visible;
+}
+.slick-dots {
+  bottom: 30px !important;
+}
+.slick-dots li button:before {
+  font-size: 12px !important;
+}
+
+@media (max-width: 768px){
+  .container {
+    max-width: 100% !important;
+    padding-left: 24px;
+    padding-right: 24px;
   }
-  
-  @media (max-width: 768px){
-    .container {
-      padding-left: 24px;
-      padding-right: 24px;
-    }
-  
-  }
+}

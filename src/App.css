@@ -1,0 +1,13 @@
+header.show-mobile .menu-mobile {
+    max-height: 500px !important;
+    opacity: 1 !important;
+    visibility: visible;
+  }
+  
+  @media (max-width: 768px){
+    .container {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  
+  }

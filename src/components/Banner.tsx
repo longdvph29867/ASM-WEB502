@@ -114,7 +114,7 @@ const Banner = () => {
               </div>
             </div>
           </div>
-          <div id="slick-slide1">
+          <div>
             <div className="relative left-0 top-0 w-full h-full pb-[42%]">
               <div className="absolute h-full w-full top-0 left-0">
                 <div className="container mx-auto h-full flex justify-end">

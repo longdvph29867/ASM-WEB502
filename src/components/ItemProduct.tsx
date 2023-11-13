@@ -6,7 +6,7 @@ type Props = {
 };
 
 const ItemProduct: React.FC<Props> = ({ product }) => {
-  const { _id, name, desc, images, price, slug, id_category, gender } = product;
+  const { name, desc, images, price, slug } = product;
   return (
     <Link to={`/products/${slug}`}>
       <div className="relative flex flex-col bg-transparent duration-200 hover:-translate-y-4">

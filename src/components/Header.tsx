@@ -3,6 +3,7 @@ import { useState } from "react";
 import imgLogo from "../assets/img/logo140.svg";
 import Menu from "./Menu";
 import User from "./User";
+import Search from "./Search";
 
 const Header = () => {
   const [showMenuMobile, setShowMenuMobile] = useState<boolean>(false);
@@ -60,37 +61,7 @@ const Header = () => {
           </nav>
           <div className="flex-1 flex justify-end items-center">
             <div className="mt-1 hidden lg:block w-40 mr-2">
-              <form action="" className="flex-1 text-slate-900">
-                <div className="bg-slate-50 flex items-center space-x-1 py-2 px-4 rounded-xl h-full border border-slate-100">
-                  <svg
-                    width={22}
-                    height={22}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M22 22L20 20"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <input
-                    placeholder="Tìm kiếm.."
-                    className="border-none bg-transparent outline-none w-full text-sm "
-                    type="search"
-                  />
-                </div>
-              </form>
+              <Search />
             </div>
             <User />
             <button className="lg:w-12 w-10 h-10 lg:h-12 flex justify-center items-center relative text-slate-700 rounded-full hover:bg-slate-100">
@@ -134,7 +105,7 @@ const Header = () => {
                 />
               </svg>
               <span className="absolute w-3.5 h-3.5 flex items-center justify-center bg-[#12a5e8] top-1.5 right-1.5 rounded-full text-[10px] leading-none text-white font-medium">
-                5
+                0
               </span>
             </button>
           </div>
@@ -143,37 +114,7 @@ const Header = () => {
         <nav className="menu-mobile flex lg:hidden items-center justify-center flex-col max-h-0 duration-500 opacity-0 invisible">
           <Menu />
           <div className="mt-5 mb-3">
-            <form action="" method="POST" className="flex-1 text-slate-900">
-              <div className="bg-slate-50 flex items-center space-x-1 py-2 px-4 rounded-xl h-full border border-slate-100">
-                <svg
-                  width={22}
-                  height={22}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M22 22L20 20"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <input
-                  placeholder="Tìm kiếm.."
-                  className="border-none bg-transparent outline-none w-full text-sm "
-                  type="search"
-                />
-              </div>
-            </form>
+            <Search />
           </div>
         </nav>
       </div>

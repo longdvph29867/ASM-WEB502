@@ -12,13 +12,14 @@ const Banner = () => {
   const settings = {
     dots: true,
     infinite: true,
+    arrows: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     fade: true,
     cssEase: "linear",
-    autoplay: true,
-    autoplaySpeed: 3000,
+    autoplay: false,
+    autoplaySpeed: 2500,
     beforeChange: (current: number, next: number) => {
       // Chèn lớp animate.css trước khi chuyển đổi slide
       const currentSlideText = document.getElementById(
@@ -73,7 +74,7 @@ const Banner = () => {
                     id="slick-slide-img0"
                   />
                   <div id="slick-slide-text0" className="h-full w-full">
-                    <div className=" container mx-auto flex justify-center items-start h-full flex-col">
+                    <div className="flex justify-center items-start h-full flex-col">
                       <span className="text-base sm:text-xl text-slate-700">
                         Trong mùa này, hãy tìm điều tốt nhất
                       </span>

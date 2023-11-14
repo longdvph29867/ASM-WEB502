@@ -9,4 +9,5 @@ type Product = {
     createAt: string,
     updateAt: string,
     gender: string
+    rating:number
 }

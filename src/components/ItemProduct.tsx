@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { formartCurrency } from "../util/util";
+import { formartCurrency, formartRating } from "../util/util";
 
 type Props = {
   product: Product;
 };
 
 const ItemProduct: React.FC<Props> = ({ product }) => {
-  const { name, desc, images, price, slug } = product;
+  const { name, desc, images, price, slug, rating } = product;
   return (
     <Link to={`/products/${slug}`}>
       <div className="relative flex flex-col bg-transparent duration-200 hover:-translate-y-4">
@@ -51,7 +51,7 @@ const ItemProduct: React.FC<Props> = ({ product }) => {
         </div>
         <div className="space-y-4 px-2.5 pt-5 pb-2.5">
           <div>
-            <h2 className="text-base font-semibold">{name}</h2>
+            <h2 className="text-base font-semibold min-h-[48px]">{name}</h2>
             <p className="text-sm text-slate-500 mt-1 ">
               {desc.slice(0, 50)}...
             </p>
@@ -60,23 +60,19 @@ const ItemProduct: React.FC<Props> = ({ product }) => {
             <div className="flex items-center border-2 border-green-500 rounded-lg py-1 px-2  text-sm font-medium">
               <span className="text-green-500">{formartCurrency(price)}</span>
             </div>
-            <div className="flex items-center mb-0.5">
-              <svg
-                fill="#fbbf24"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                className="w-5 mb-1 h-5 text-amber-400"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span className="text-sm ml-1 text-slate-500">
-                4.9 (98 reviews)
-              </span>
+            <div className="flex items-center">
+              <div className="relative w-20 h-6">
+                <div className="absolute text-slate-400 left-0 bottom-0 h-full w-20">
+                  ★★★★★
+                </div>
+                <div
+                  className={`absolute text-[#fbbf24] left-0 bottom-0 h-full overflow-hidden`}
+                  style={{ width: `${formartRating(rating)}%` }}
+                >
+                  ★★★★★
+                </div>
+              </div>
+              <span className="text-sm ml-1 text-slate-500">({rating})</span>
             </div>
           </div>
         </div>

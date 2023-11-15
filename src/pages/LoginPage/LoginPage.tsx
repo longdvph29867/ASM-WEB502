@@ -4,6 +4,7 @@ type Props = {
 import imgBg from "../../assets/img/bg-login1.jpg";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import imgBgForm from "../../assets/img/bg-form-login.jpeg";
 
 const LoginPage = ({ action }: Props) => {
   return (
@@ -15,8 +16,16 @@ const LoginPage = ({ action }: Props) => {
     `}
       style={{ backgroundImage: `url(${imgBg})` }}
     >
-      <div className="p-5 bg-white rounded-xl w-96 max-w-full max-h-screen z-10">
-        {action === "login" ? <SignIn /> : <SignUp />}
+      <div className="bg-white rounded-xl max-w-3xl w-full max-h-screen z-10 overflow-scroll">
+        <div className=" grid grid-cols-2 gap-5">
+          <div className=" p-5 pr-0">
+            {action === "login" ? <SignIn /> : <SignUp />}
+          </div>
+          <div
+            className="bg-cover bg-center min-h-[458px]"
+            style={{ backgroundImage: `url(${imgBgForm})` }}
+          ></div>
+        </div>
       </div>
       <div
         className="

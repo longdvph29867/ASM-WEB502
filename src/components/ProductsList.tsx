@@ -4,20 +4,24 @@ type Props = {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ItemProduct from "./ItemProduct";
+import { hiddenSpinner, showSpinner } from "../util/util";
 
 const ProductsList = ({ gender }: Props) => {
   const [productsList, setProductsList] = useState([]);
-  console.log(
-    "🚀 ~ file: ProductsList.tsx:10 ~ ProductsList ~ productsList:",
-    productsList
-  );
+
   const fetchData = async () => {
-    const API = gender
-      ? `https://asm-web-503.vercel.app/products?gender=${gender}`
-      : `https://asm-web-503.vercel.app/products`;
-    const { data } = await axios.get(API);
-    console.log("🚀 ~ file: ProductsList.tsx:12 ~ fetchData ~ API:", API);
-    setProductsList(data.data);
+    try {
+      showSpinner();
+      const API = gender
+        ? `https://asm-web-503.vercel.app/products?gender=${gender}`
+        : `https://asm-web-503.vercel.app/products`;
+      const { data } = await axios.get(API);
+      hiddenSpinner();
+      setProductsList(data.data);
+    } catch (error) {
+      hiddenSpinner();
+      console.log(error);
+    }
   };
   useEffect(() => {
     fetchData();

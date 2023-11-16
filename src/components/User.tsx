@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { localUserService } from "../services/localService";
 
 const User = () => {
+  const infoUser = localUserService.get();
+
   const handleLogOut = () => {
     localUserService.remove();
     location.href = "/";
@@ -33,7 +35,7 @@ const User = () => {
         </svg>
         <div className="group-hover:visible group-hover:opacity-100 invisible duration-300 absolute transform z-10 w-40 top-full right-0 opacity-0">
           <ul className="rounded-lg shadow-lg border border-neutral-100 text-sm relative bg-white py-4 grid gap-1">
-            {localUserService.get() ? (
+            {infoUser ? (
               <>
                 <li className="px-2">
                   <Link
@@ -43,6 +45,19 @@ const User = () => {
                     Thông tin
                   </Link>
                 </li>
+                {infoUser.role === "admin" ? (
+                  <li className="px-2">
+                    <Link
+                      className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
+                      to="/admin/products"
+                    >
+                      Quản trị
+                    </Link>
+                  </li>
+                ) : (
+                  <></>
+                )}
+
                 <li className="px-2">
                   <div
                     onClick={handleLogOut}
@@ -83,8 +98,11 @@ const User = () => {
           </ul>
         </div>
       </button>
-      {localUserService.get() ? (
-        <div className="text-xs text-slate-700">Hi, Long</div>
+      {infoUser ? (
+        <div className="text-xs text-slate-700">
+          Hi,
+          {infoUser.fullName.split(" ")[0]}
+        </div>
       ) : (
         <></>
       )}

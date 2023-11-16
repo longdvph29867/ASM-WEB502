@@ -9,6 +9,7 @@ import LayoutAdmin from "./Layout/LayoutAdmin";
 import PortfolioPage from "./pages/PortfolioPage";
 import { ToastContainer } from "react-toastify";
 import Spinner from "./components/Spinner";
+import AddProduct from "./pages/AdminAddProduct";
 
 function App() {
   return (
@@ -21,8 +22,12 @@ function App() {
           <Route path="/login" element={<LoginPage action={"login"} />} />
           <Route path="/singup" element={<LoginPage action={"singup"} />} />
           <Route
-            path="/admin"
+            path="/admin/products"
             element={<LayoutAdmin Component={AdminProductsList} />}
+          />
+          <Route
+            path="/admin/products/add"
+            element={<LayoutAdmin Component={AddProduct} />}
           />
           <Route path="/portfolio" element={<PortfolioPage />} />
         </Routes>

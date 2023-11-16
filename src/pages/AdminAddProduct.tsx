@@ -1,14 +1,14 @@
 // type Props = {};
 
 import React, { useState } from "react";
-import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { validateFormSignUp } from "../../Validations/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { hiddenSpinner, showSpinner } from "../../util/util";
+import { validateFormSignUp } from "../Validations/auth";
+import { hiddenSpinner, showSpinner } from "../util/util";
+import Button from "../components/Button";
 
-const SignUp = () => {
+const AddProduct = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<FormSignUpData>({
     account: "",
@@ -17,7 +17,13 @@ const SignUp = () => {
     phoneNumber: "",
     rePassword: "",
   });
-  const [errors, setErrors] = useState<Partial<FormSignUpData>>({});
+  const [errors, setErrors] = useState<Partial<FormSignUpData> | null>({
+    account: "",
+    password: "",
+    fullName: "",
+    phoneNumber: "",
+    rePassword: "",
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,7 +33,7 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validateFormSignUp(formData);
-    if (Object.keys(validationErrors).length !== 0) {
+    if (validationErrors) {
       setErrors(validationErrors);
     } else {
       showSpinner();
@@ -51,7 +57,6 @@ const SignUp = () => {
           toast.success("Đăng ký thành công!", {
             position: toast.POSITION.TOP_CENTER,
           });
-          console.log("q2q");
           navigate("/login");
           hiddenSpinner();
         }
@@ -66,7 +71,7 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div className="max-w-lg w-full mx-auto">
       <h3 className=" text-2xl text-slate-700 mb-1">Đăng ký</h3>
       <form onSubmit={handleSubmit} className="flex flex-col text-[#333]">
         <div className="flex flex-col mb-2">
@@ -146,4 +151,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default AddProduct;

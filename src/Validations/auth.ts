@@ -21,9 +21,9 @@ const validPhoneNumber = (value: string): string => {
   return '';
 };
 
-export const validateFormSignUp = (data: FormSignUpData): ObjString | null => {
+export const validateFormSignUp = (data: FormSignUpData): Partial<FormSignUpData> => {
   const {account, phoneNumber, fullName, password, rePassword} = data
-  const errors: ObjString = {};
+  const errors: Partial<FormSignUpData> = {};
 
   if (required(account)) {
     errors.account = required(account);
@@ -61,8 +61,22 @@ export const validateFormSignUp = (data: FormSignUpData): ObjString | null => {
     errors.rePassword = '*Mật khẩu không khớp!'
   }
 
-  console.log("🚀 ~ file: auth.ts:65 ~ validateFormSignUp ~ errors:", errors)
-  return Object.keys(errors).length > 0 ? errors : null;
+  return errors;
+}
+
+export const validateFormSignIn = (data: FormSignInData): Partial<FormSignInData>=> {
+  const {account, password} = data
+  const errors: Partial<FormSignInData> = {};
+
+  if (required(account)) {
+    errors.account = required(account);
+  }
+
+  if (required(password)) {
+    errors.password = required(password);
+  }
+
+  return errors;
 }
 
 

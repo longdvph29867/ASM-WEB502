@@ -7,3 +7,8 @@ type FormSignUpData = {
 };
 type ObjString = {[key: string]: string}
 
+type FormSignInData = {
+    account: string;
+    password: string;
+};
+

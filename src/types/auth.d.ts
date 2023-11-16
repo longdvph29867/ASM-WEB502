@@ -6,3 +6,4 @@ type FormSignUpData = {
     rePassword: string;
 };
 type ObjString = {[key: string]: string}
+

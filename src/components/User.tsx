@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { localUserService } from "../services/localService";
 
 const User = () => {
   return (
@@ -27,30 +28,53 @@ const User = () => {
         </svg>
         <div className="group-hover:visible group-hover:opacity-100 invisible duration-300 absolute transform z-10 w-40 top-full right-0 opacity-0">
           <ul className="rounded-lg shadow-lg border border-neutral-100 text-sm relative bg-white py-4 grid gap-1">
-            <li className="px-2">
-              <Link
-                className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
-                to="/login"
-              >
-                Đăng nhập
-              </Link>
-            </li>
-            <li className="px-2">
-              <Link
-                className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
-                to="/singup"
-              >
-                Đăng ký
-              </Link>
-            </li>
-            <li className="px-2">
-              <Link
-                className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
-                to="/portfolio"
-              >
-                Portfolio
-              </Link>
-            </li>
+            {localUserService.get() ? (
+              <>
+                <li className="px-2">
+                  <Link
+                    className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
+                    to="/login"
+                  >
+                    Thông tin
+                  </Link>
+                </li>
+                <li className="px-2">
+                  <Link
+                    className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
+                    to="/login"
+                  >
+                    Đăng xuất
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="px-2">
+                  <Link
+                    className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
+                    to="/login"
+                  >
+                    Đăng nhập
+                  </Link>
+                </li>
+                <li className="px-2">
+                  <Link
+                    className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
+                    to="/singup"
+                  >
+                    Đăng ký
+                  </Link>
+                </li>
+                <li className="px-2">
+                  <Link
+                    className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
+                    to="/portfolio"
+                  >
+                    Portfolio
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </button>

@@ -24,7 +24,6 @@ function App() {
             path="/admin"
             element={<LayoutAdmin Component={AdminProductsList} />}
           />
-
           <Route path="/portfolio" element={<PortfolioPage />} />
         </Routes>
       </BrowserRouter>

@@ -1,23 +1,19 @@
 // type Props = {};
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import { useState } from "react";
 import axios from "axios";
+import { localUserService } from "../../services/localService";
 type FormData = {
   account: string;
   password: string;
-  fullName: string;
-  phoneNumber: string;
-  rePassword: string;
 };
 const SignIn = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     account: "",
     password: "",
-    fullName: "",
-    phoneNumber: "",
-    rePassword: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,11 +27,9 @@ const SignIn = () => {
       const newData = {
         account: formData.account,
         password: formData.password,
-        fullName: formData.fullName,
-        phoneNumber: formData.phoneNumber,
       };
       const res = await axios.post(
-        "https://asm-web-503.vercel.app/auth/register",
+        "https://asm-web-503.vercel.app/auth/login",
         newData,
         {
           headers: {
@@ -44,7 +38,13 @@ const SignIn = () => {
         }
       );
       if (res) {
-        window.location.href = "/login";
+        const infoUser = {
+          ...res.data.data,
+          accessToken: res.data.accessToken,
+        };
+        localUserService.set(infoUser);
+        // window.location.href = "/login";
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -69,7 +69,7 @@ const SignIn = () => {
           <small className="text-sm text-red-500" />
         </div>
         <div className="flex flex-col mb-2">
-          <label className="text-sm" htmlFor="mat_khau">
+          <label className="text-sm" htmlFor="">
             Mật khẩu
           </label>
           <input

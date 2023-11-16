@@ -7,6 +7,7 @@ import { validateFormSignUp } from "../../Validations/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { hiddenSpinner, showSpinner } from "../../util/util";
+import { ApiUrls } from "../../constant/constant";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const SignUp = () => {
           phoneNumber: formData.phoneNumber,
         };
         const res = await axios.post(
-          "https://asm-web-503.vercel.app/auth/register",
+          `${ApiUrls.API_URL}/auth/register`,
           newData,
           {
             headers: {

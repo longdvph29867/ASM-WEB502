@@ -1,20 +1,21 @@
-type Props = {
-  gender?: string;
-};
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ItemProduct from "./ItemProduct";
 import { hiddenSpinner, showSpinner } from "../util/util";
+import { ApiUrls } from "../constant/constant";
+type Props = {
+  gender?: string;
+};
 
-const ProductsList = ({ gender }: Props) => {
-  const [productsList, setProductsList] = useState([]);
+const ProductsList: React.FC<Props> = ({ gender }) => {
+  const [productsList, setProductsList] = useState<Product[]>([]);
 
   const fetchData = async () => {
     try {
       showSpinner();
       const API = gender
-        ? `https://asm-web-503.vercel.app/products?gender=${gender}`
-        : `https://asm-web-503.vercel.app/products`;
+        ? `${ApiUrls.API_URL}/products?gender=${gender}`
+        : `${ApiUrls.API_URL}/products`;
       const { data } = await axios.get(API);
       hiddenSpinner();
       setProductsList(data.data);

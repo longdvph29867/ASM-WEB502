@@ -57,7 +57,14 @@ const User = () => {
                 ) : (
                   <></>
                 )}
-
+                <li className="px-2">
+                  <Link
+                    className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
+                    to="/portfolio"
+                  >
+                    Portfolio
+                  </Link>
+                </li>
                 <li className="px-2">
                   <div
                     onClick={handleLogOut}

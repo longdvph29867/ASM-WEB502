@@ -2,13 +2,12 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { ApiUrls } from "../constant/constant";
 
 const Menu = () => {
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
   const fetchData = async () => {
-    const { data } = await axios.get(
-      "https://asm-web-503.vercel.app/categories"
-    );
+    const { data } = await axios.get(`${ApiUrls.API_URL}/categories`);
     setCategoriesList(data.data);
   };
   useEffect(() => {

@@ -8,6 +8,7 @@ import { localUserService } from "../../services/localService";
 import { toast } from "react-toastify";
 import { hiddenSpinner, showSpinner } from "../../util/util";
 import { validateFormSignIn } from "../../Validations/auth";
+import { ApiUrls } from "../../constant/constant";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -34,15 +35,11 @@ const SignIn = () => {
           password: formData.password,
         };
         showSpinner();
-        const res = await axios.post(
-          "https://asm-web-503.vercel.app/auth/login",
-          newData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const res = await axios.post(`${ApiUrls.API_URL}/auth/login`, newData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         if (res) {
           const infoUser = {
             ...res.data.data,

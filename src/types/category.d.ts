@@ -1,5 +1,5 @@
 type Category = {
-  _id: string,
+  _id: ObjectId,
   categoryName: string,
   categorySlug: string,
   createAt: string,

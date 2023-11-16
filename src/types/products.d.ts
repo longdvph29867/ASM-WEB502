@@ -1,13 +1,22 @@
 type Product = {
-    _id: string,
+    _id: ObjectId,
     name: string,
     desc: string,
     images: string[],
     price: number,
     slug: string,
-    id_category: string,
+    id_category: ObjectId,
     createAt: string,
     updateAt: string,
     gender: string
     rating:number
 }
+type FormProductData = Omit<Product, '_id' | 'slug' | 'createAt' | 'updateAt' | 'rating'  | 'price' | 'images'> & {price: string, images: tring}
+// type FormProductData = {
+//     name: string,
+//     desc: string,
+//     images: string,
+//     price: string,
+//     id_category: ObjectId,
+//     gender: string
+// }

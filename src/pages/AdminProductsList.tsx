@@ -27,11 +27,6 @@ const AdminProductsList: React.FC = () => {
     if (confirm("Bạn có chắc chắn xoá không!")) {
       try {
         const data = await axios.delete(`${ApiUrls.API_URL}/products/${id}`);
-        console.log(
-          "🚀 ~ file: AdminProductsList.tsx:32 ~ handleDelete ~ data:",
-          data
-        );
-
         if (data) {
           toast.success(data.data.messgae, {
             position: toast.POSITION.TOP_CENTER,
@@ -74,7 +69,7 @@ const AdminProductsList: React.FC = () => {
             </div>
           </div>
           <div>
-            {porudctsList.map((product, index) => {
+            {[...porudctsList].reverse().map((product, index) => {
               return (
                 <div
                   key={index}

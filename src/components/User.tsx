@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import { localUserService } from "../services/localService";
 
 const User = () => {
+  const handleLogOut = () => {
+    localUserService.remove();
+    location.href = "/";
+  };
+
   return (
     <div className="flex items-center">
       <button className="relative group lg:w-12 w-10 h-10 lg:h-12 flex justify-center items-center text-slate-700 rounded-full hover:bg-slate-100">
@@ -33,18 +38,18 @@ const User = () => {
                 <li className="px-2">
                   <Link
                     className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
-                    to="/login"
+                    to="/"
                   >
                     Thông tin
                   </Link>
                 </li>
                 <li className="px-2">
-                  <Link
+                  <div
+                    onClick={handleLogOut}
                     className="flex items-center font-normal text-neutral-600 py-2 px-4 rounded-md hover:bg-neutral-100"
-                    to="/login"
                   >
                     Đăng xuất
-                  </Link>
+                  </div>
                 </li>
               </>
             ) : (
@@ -78,7 +83,11 @@ const User = () => {
           </ul>
         </div>
       </button>
-      <div className="text-xs text-slate-700">Hi, Long</div>
+      {localUserService.get() ? (
+        <div className="text-xs text-slate-700">Hi, Long</div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

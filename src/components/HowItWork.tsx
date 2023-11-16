@@ -48,8 +48,11 @@ const HowItWork: React.FC = () => {
       <div className="mt-28">
         <div className="container mx-auto">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20">
-            {listStep.map(({ id, img, title, content, color }) => (
-              <div className="relative flex flex-col items-center max-w-xs mx-auto">
+            {listStep.map(({ id, img, title, content, color }, index) => (
+              <div
+                key={index}
+                className="relative flex flex-col items-center max-w-xs mx-auto"
+              >
                 <div className="mb-4 sm:mb-10 max-w-[140px] mx-auto">
                   <img src={img} alt="" />
                 </div>

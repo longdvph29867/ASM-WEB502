@@ -102,12 +102,12 @@ const AdminProductsList: React.FC = () => {
                     </span>
                   </div>
                   <div className="p-2 space-x-2">
-                    <a
-                      href="#"
+                    <Link
+                      to={`/admin/products/update/${product._id}`}
                       className="text-sm font-semibold text-yellow-500"
                     >
                       Sửa
-                    </a>
+                    </Link>
                     <button
                       onClick={() => handleDelete(product._id)}
                       className="text-sm font-semibold text-red-500"

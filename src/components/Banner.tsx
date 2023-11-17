@@ -18,8 +18,9 @@ const Banner = () => {
     slidesToScroll: 1,
     fade: true,
     cssEase: "linear",
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 2500,
+    pauseOnHover: false,
     beforeChange: (current: number, next: number) => {
       // Chèn lớp animate.css trước khi chuyển đổi slide
       const currentSlideText = document.getElementById(

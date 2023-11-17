@@ -52,7 +52,6 @@ const SignUp = () => {
           toast.success("Đăng ký thành công!", {
             position: toast.POSITION.TOP_CENTER,
           });
-          console.log("q2q");
           navigate("/login");
           hiddenSpinner();
         }

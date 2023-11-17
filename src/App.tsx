@@ -10,6 +10,7 @@ import PortfolioPage from "./pages/PortfolioPage";
 import { ToastContainer } from "react-toastify";
 import Spinner from "./components/Spinner";
 import AddProduct from "./pages/AdminAddProduct";
+import UpdateProduct from "./pages/AdminUpdateProduct";
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
           <Route
             path="/admin/products/add"
             element={<LayoutAdmin Component={AddProduct} />}
+          />
+          <Route
+            path="/admin/products/update/:id"
+            element={<LayoutAdmin Component={UpdateProduct} />}
           />
           <Route path="/portfolio" element={<PortfolioPage />} />
         </Routes>

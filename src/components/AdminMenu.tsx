@@ -8,27 +8,32 @@ type Menu = {
   link: string;
   title: string;
   icon: JSX.Element;
+  active: boolean;
 };
 const listMenu: Menu[] = [
   {
     link: "/",
     title: "Dashboard",
     icon: <MdDashboard />,
+    active: false,
   },
   {
     link: "/",
     title: "Category",
     icon: <MdCategory />,
+    active: false,
   },
   {
     link: "/",
     title: "Products",
     icon: <FaBoxes />,
+    active: true,
   },
   {
     link: "/",
     title: "Users",
     icon: <FaUserAlt />,
+    active: false,
   },
 ];
 
@@ -46,14 +51,20 @@ const AdminMenu: React.FC = () => {
         <hr className="h-px border-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
         <div className="mt-4">
           <ul className="flex flex-col">
-            {listMenu.map(({ link, title, icon }, index) => {
+            {listMenu.map(({ link, title, icon, active }, index) => {
               return (
                 <li key={index} className="">
                   <a
-                    className="text-sm flex items-center lg:px-4 py-2.5 rounded-lg"
+                    className={`text-sm flex items-center lg:px-4 py-2.5 rounded-lg ${
+                      active ? "bg-white shadow-xl" : ""
+                    } `}
                     href={link}
                   >
-                    <div className="shadow-lg lg:mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white">
+                    <div
+                      className={`lg:mr-2 flex h-8 w-8 items-center justify-center rounded-lg ${
+                        !active ? "bg-white shadow-lg" : ""
+                      } `}
+                    >
                       {icon}
                     </div>
                     <span className="ml-1 opacity-100 hidden lg:block">

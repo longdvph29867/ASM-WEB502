@@ -1,7 +1,7 @@
 // type Props = {}
 import imgBanner2 from "../assets/img/promo2.webp";
-import imgLogo from "../assets/img/logo140.svg";
 import imgBg from "../assets/img/bg-banner.svg";
+import imgLogo from "../assets/img/logo140.svg";
 
 const Banner2 = () => {
   return (

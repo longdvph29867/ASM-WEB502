@@ -6,9 +6,9 @@ type Props = {
 };
 
 const ItemProduct: React.FC<Props> = ({ product }) => {
-  const { name, desc, images, price, slug, rating } = product;
+  const { name, desc, images, price, _id, rating } = product;
   return (
-    <Link to={`/products/${slug}`}>
+    <Link to={`/products/${_id}`}>
       <div className="relative flex flex-col bg-transparent duration-200 hover:-translate-y-4">
         <div className="relative flex-shrink-0 bg-slate-50 rounded-3xl overflow-hidden z-1">
           <div className="flex w-full">

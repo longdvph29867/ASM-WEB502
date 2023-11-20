@@ -11,7 +11,7 @@ import { ToastContainer } from "react-toastify";
 import Spinner from "./components/Spinner";
 import AddProduct from "./pages/AdminAddProduct";
 import UpdateProduct from "./pages/AdminUpdateProduct";
-import DetailPage from "./pages/DetailPage";
+import DetailPage from "./pages/DetailPage/DetailPage";
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
           <Route path="/login" element={<LoginPage action={"login"} />} />
           <Route path="/singup" element={<LoginPage action={"singup"} />} />
           <Route
-            path="/products/:id"
+            path="/products/:slug"
             element={<Layout Component={DetailPage} />}
           />
           <Route

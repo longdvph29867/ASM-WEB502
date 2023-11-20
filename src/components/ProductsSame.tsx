@@ -17,6 +17,7 @@ const ProductsSame: React.FC<Props> = ({ productsSame }) => {
     autoplay: true,
     autoplaySpeed: 2500,
     pauseOnHover: false,
+
     responsive: [
       {
         breakpoint: 1024,
@@ -45,15 +46,29 @@ const ProductsSame: React.FC<Props> = ({ productsSame }) => {
       <h2 className=" text-3xl md:text-4xl font-semibold mb-12">
         Sản phẩm cùng loại
       </h2>
-      <div className="lg:-mx-6 -mx-2">
-        <Slider {...settings} className="">
-          {productsSame.map((product, index) => (
-            <div key={index} className="py-6 lg:px-6 px-2">
-              <ItemProduct product={product} />
-            </div>
-          ))}
-        </Slider>
-      </div>
+      {productsSame.length < 4 ? (
+        <>
+          <div className="lg:-mx-6 -mx-2 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
+            {productsSame.map((product, index) => (
+              <div key={index} className="py-6 lg:px-6 px-2">
+                <ItemProduct product={product} />
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="lg:-mx-6 -mx-2">
+            <Slider {...settings} className="">
+              {productsSame.map((product, index) => (
+                <div key={index} className="py-6 lg:px-6 px-2">
+                  <ItemProduct product={product} />
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </>
+      )}
     </div>
   );
 };

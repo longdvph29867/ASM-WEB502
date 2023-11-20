@@ -17,6 +17,10 @@ const DetailPage = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [productsSame, setProductsSame] = useState<Product[]>([]);
+  console.log(
+    "🚀 ~ file: DetailPage.tsx:20 ~ DetailPage ~ productsSame:",
+    productsSame
+  );
   const fetchProduct = async () => {
     try {
       showSpinner();

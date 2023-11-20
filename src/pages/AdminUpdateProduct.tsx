@@ -6,8 +6,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { hiddenSpinner, showSpinner } from "../util/util";
 import Button from "../components/Button";
-import { ApiUrls } from "../constant/constant";
 import { validateProduct } from "../Validations/product";
+import { ApiUrls } from "../constant/constant";
 
 const UpdateProduct = () => {
   const params = useParams();

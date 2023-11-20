@@ -59,7 +59,7 @@ const ImgDetail: React.FC<Props> = ({ images }) => {
           <div
             onClick={() => handleImage(img)}
             key={index}
-            className={`relative pb-[100%] rounded-2xl overflow-hidden border-2 ${
+            className={`cursor-pointer relative pb-[100%] rounded-2xl overflow-hidden border-2 ${
               image === img ? "border-slate-400" : "border-transparent"
             }`}
           >

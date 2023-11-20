@@ -51,7 +51,9 @@ const ItemProduct: React.FC<Props> = ({ product }) => {
         </div>
         <div className="space-y-4 px-2.5 pt-5 pb-2.5">
           <div>
-            <h2 className="text-base font-semibold min-h-[48px]">{name}</h2>
+            <h2 className="text-base font-semibold min-h-[48px] my-line-2">
+              {name}
+            </h2>
             <p className="text-sm text-slate-500 mt-1 ">
               {desc.slice(0, 50)}...
             </p>

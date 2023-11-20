@@ -9,6 +9,13 @@ header.show-mobile .menu-mobile {
 .slick-dots li button:before {
   font-size: 12px !important;
 }
+.my-line-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 40px;
+}
 
 @media (max-width: 768px){
   .container {

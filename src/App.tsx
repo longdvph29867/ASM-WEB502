@@ -36,7 +36,7 @@ function App() {
             element={<LayoutAdmin Component={AddProduct} />}
           />
           <Route
-            path="/admin/products/update/:id"
+            path="/admin/products/update/:slug"
             element={<LayoutAdmin Component={UpdateProduct} />}
           />
           <Route path="/portfolio" element={<PortfolioPage />} />

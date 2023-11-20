@@ -14,7 +14,6 @@ import { ApiUrls } from "../constant/constant";
 const DetailPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
-  console.log("🚀 ~ file: DetailPage.tsx:12 ~ DetailPage ~ product:", product);
   const fetchProduct = async () => {
     try {
       showSpinner();

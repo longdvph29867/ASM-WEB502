@@ -2,7 +2,7 @@ import { required, validLength } from "./validation";
 
 export const validateProduct = (data: FormProductData)=> {
     const {name, price, desc, images, gender, id_category} = data
-    const errors: Partial<Omit<FormProductData, 'price'>> & {price?: string} = {};
+    const errors: ValidProduct = {};
   
     if (required(name)) {
       errors.name = required(name);
@@ -11,8 +11,8 @@ export const validateProduct = (data: FormProductData)=> {
       errors.name = validLength(name, 3, 253);
     }
   
-    if (required(price)) {
-      errors.price = required(price);
+    if (required(String(price))) {
+      errors.price = required(String(price));
     }
     else if(isNaN(Number(price))) {
       errors.price = '*Trường này phải là số!';

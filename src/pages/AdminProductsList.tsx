@@ -103,7 +103,7 @@ const AdminProductsList: React.FC = () => {
                   </div>
                   <div className="p-2 space-x-2">
                     <Link
-                      to={`/admin/products/update/${product._id}`}
+                      to={`/admin/products/update/${product.slug}`}
                       className="text-sm font-semibold text-yellow-500"
                     >
                       Sửa

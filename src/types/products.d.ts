@@ -11,7 +11,7 @@ type Product = {
     gender: string
     rating:number
 }
-type FormProductData = Omit<Product, '_id' | 'slug' | 'createAt' | 'updateAt' | 'rating'  | 'price' | 'images'> & {price: string, images: tring}
+type FormProductData = Omit<Product, '_id' | 'slug' | 'createAt' | 'updateAt' | 'rating' | 'images'> & { images: tring}
 // type FormProductData = {
 //     name: string,
 //     desc: string,
@@ -20,3 +20,5 @@ type FormProductData = Omit<Product, '_id' | 'slug' | 'createAt' | 'updateAt' | 
 //     id_category: ObjectId,
 //     gender: string
 // }
+
+type ValidProduct = Partial<Omit<FormProductData, 'price'>> & {price?: string}

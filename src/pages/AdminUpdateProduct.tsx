@@ -18,12 +18,12 @@ const UpdateProduct = () => {
     name: "",
     desc: "",
     images: "",
-    price: "",
+    price: 0,
     gender: "",
     id_category: "",
   });
 
-  const [errors, setErrors] = useState<Partial<FormProductData>>({});
+  const [errors, setErrors] = useState<ValidProduct>({});
 
   const fetchCategoryes = async () => {
     showSpinner();
@@ -41,7 +41,7 @@ const UpdateProduct = () => {
     try {
       hiddenSpinner();
       const { data } = await axios.get(
-        `${ApiUrls.API_URL}/products/${params.id}`
+        `${ApiUrls.API_URL}/products/${params.slug}`
       );
       const product: Product = data.data;
 
@@ -50,7 +50,7 @@ const UpdateProduct = () => {
         name: product.name,
         desc: product.desc,
         images: product.images[0],
-        price: String(product.price),
+        price: product.price,
         gender: product.gender,
         id_category: product.id_category,
       });
@@ -64,16 +64,13 @@ const UpdateProduct = () => {
     fetchCategoryes();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { value } = e.target;
-    setFormData({ ...formData, desc: value });
-  };
-  const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, id_category: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -90,13 +87,13 @@ const UpdateProduct = () => {
           name: formData.name,
           desc: formData.desc,
           images: [formData.images],
-          price: formData.price,
+          price: Number(formData.price),
           gender: formData.gender,
           id_category: formData.id_category,
         };
 
         const res = await axios.put(
-          `${ApiUrls.API_URL}/products/${params.id}`,
+          `${ApiUrls.API_URL}/products/${params.slug}`,
           newData,
           {
             headers: {
@@ -145,7 +142,7 @@ const UpdateProduct = () => {
             Giá sản phẩm
           </label>
           <input
-            type="text"
+            type="number"
             name="price"
             onChange={handleChange}
             value={formData.price}
@@ -172,7 +169,7 @@ const UpdateProduct = () => {
           </label>
           <textarea
             name="desc"
-            onChange={handleTextAreaChange}
+            onChange={handleChange}
             defaultValue={formData.desc}
             rows={3}
             className="text-[#666] border border-gray-300 bg-[#f7f7f7] text-base px-2 py-1 outline-none focus:border-slate-500 mt-1 focus:bg-white rounded"
@@ -215,7 +212,7 @@ const UpdateProduct = () => {
           </label>
           <div>
             <select
-              onChange={handleOptionChange}
+              onChange={handleChange}
               name="id_category"
               className="text-[#666] border border-gray-300 bg-[#f7f7f7] text-base px-2 py-1 outline-none focus:border-slate-500 mt-1 focus:bg-white rounded w-full"
               value={formData.id_category}

@@ -17,12 +17,12 @@ const AddProduct = () => {
     name: "",
     desc: "",
     images: "",
-    price: "",
+    price: 0,
     gender: "",
     id_category: "",
   });
 
-  const [errors, setErrors] = useState<Partial<FormProductData>>({});
+  const [errors, setErrors] = useState<ValidProduct>({});
 
   const fetchCategoryes = async () => {
     const categories = await axios.get(`${ApiUrls.API_URL}/categories`);
@@ -32,15 +32,13 @@ const AddProduct = () => {
     fetchCategoryes();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, gender: e.target.value });
-  };
-  const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, id_category: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -106,7 +104,7 @@ const AddProduct = () => {
             Giá sản phẩm
           </label>
           <input
-            type="text"
+            type="number"
             name="price"
             onChange={handleChange}
             value={formData.price}
@@ -131,13 +129,13 @@ const AddProduct = () => {
           <label className="text-sm" htmlFor="">
             Mô tả
           </label>
-          <input
-            type="text"
+          <textarea
             name="desc"
             onChange={handleChange}
-            value={formData.desc}
+            defaultValue={formData.desc}
+            rows={3}
             className="text-[#666] border border-gray-300 bg-[#f7f7f7] text-base px-2 py-1 outline-none focus:border-slate-500 mt-1 focus:bg-white rounded"
-          />
+          ></textarea>
           <small className="text-sm text-red-500">{errors?.desc}</small>
         </div>
         <div className="flex flex-col mb-2">
@@ -147,7 +145,7 @@ const AddProduct = () => {
           <div className="text-[#666] text-base px-2 py-1 outline-none mt-1 rounded grid grid-cols-4 gap-4">
             <label className="cursor-pointer">
               <input
-                onChange={handleGenderChange}
+                onChange={handleChange}
                 type="radio"
                 name="gender"
                 value="male"
@@ -158,7 +156,7 @@ const AddProduct = () => {
             </label>
             <label className="cursor-pointer">
               <input
-                onChange={handleGenderChange}
+                onChange={handleChange}
                 type="radio"
                 name="gender"
                 value="female"
@@ -176,7 +174,7 @@ const AddProduct = () => {
           </label>
           <div>
             <select
-              onChange={handleOptionChange}
+              onChange={handleChange}
               name="id_category"
               className="text-[#666] border border-gray-300 bg-[#f7f7f7] text-base px-2 py-1 outline-none focus:border-slate-500 mt-1 focus:bg-white rounded w-full"
             >

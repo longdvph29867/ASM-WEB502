@@ -3,12 +3,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import { useState } from "react";
-import axios from "axios";
 import { localUserService } from "../../services/localService";
 import { toast } from "react-toastify";
 import { hiddenSpinner, showSpinner } from "../../util/util";
 import { validateFormSignIn } from "../../Validations/auth";
-import { ApiUrls } from "../../constant/constant";
+import { https } from "../../services/config";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -35,11 +34,7 @@ const SignIn = () => {
           password: formData.password,
         };
         showSpinner();
-        const res = await axios.post(`${ApiUrls.API_URL}/auth/login`, newData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await https.post("/auth/login", newData);
         if (res) {
           const infoUser = {
             ...res.data.data,

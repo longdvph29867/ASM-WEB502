@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import ItemProduct from "./ItemProduct";
 import { hiddenSpinner, showSpinner } from "../util/util";
-import { ApiUrls } from "../constant/constant";
+import { https } from "../services/config";
 type Props = {
   gender?: string;
 };
@@ -13,10 +12,8 @@ const ProductsList: React.FC<Props> = ({ gender }) => {
   const fetchData = async () => {
     try {
       showSpinner();
-      const API = gender
-        ? `${ApiUrls.API_URL}/products?gender=${gender}`
-        : `${ApiUrls.API_URL}/products`;
-      const { data } = await axios.get(API);
+      const API = gender ? `/products?gender=${gender}` : `/products`;
+      const { data } = await https.get(API);
       hiddenSpinner();
       setProductsList(data.data);
     } catch (error) {

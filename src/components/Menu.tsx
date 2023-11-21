@@ -1,13 +1,12 @@
 // type Props = {};
 
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { ApiUrls } from "../constant/constant";
+import { https } from "../services/config";
 
 const Menu = () => {
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
   const fetchData = async () => {
-    const { data } = await axios.get(`${ApiUrls.API_URL}/categories`);
+    const { data } = await https.get("/categories");
     setCategoriesList(data.data);
   };
   useEffect(() => {

@@ -2,12 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { hiddenSpinner, showSpinner } from "../util/util";
 import Button from "../components/Button";
-import { ApiUrls } from "../constant/constant";
 import { validateProduct } from "../Validations/product";
+import { https } from "../services/config";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ const AddProduct = () => {
   const [errors, setErrors] = useState<ValidProduct>({});
 
   const fetchCategoryes = async () => {
-    const categories = await axios.get(`${ApiUrls.API_URL}/categories`);
+    const categories = await https.get("/categories");
     setCategoriesList(categories.data.data);
   };
   useEffect(() => {
@@ -58,11 +57,7 @@ const AddProduct = () => {
           id_category: formData.id_category,
         };
 
-        const res = await axios.post(`${ApiUrls.API_URL}/products`, newData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await https.post("/products", newData);
         if (res) {
           toast.success("Thêm sản phẩm thành công!", {
             position: toast.POSITION.TOP_CENTER,

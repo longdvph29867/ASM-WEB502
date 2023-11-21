@@ -1,9 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { ApiUrls } from "../constant/constant";
 import { formartCurrency, hiddenSpinner, showSpinner } from "../util/util";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { https } from "../services/config";
 
 const AdminProductsList: React.FC = () => {
   const [porudctsList, setPorudctsList] = useState<Product[]>([]);
@@ -11,7 +10,7 @@ const AdminProductsList: React.FC = () => {
   const fetchData = async () => {
     showSpinner();
     try {
-      const { data } = await axios.get(`${ApiUrls.API_URL}/products`);
+      const { data } = await https.get("/products");
       setPorudctsList(data.data);
       hiddenSpinner();
     } catch (error) {
@@ -26,7 +25,7 @@ const AdminProductsList: React.FC = () => {
   const handleDelete = async (id: string) => {
     if (confirm("Bạn có chắc chắn xoá không!")) {
       try {
-        const data = await axios.delete(`${ApiUrls.API_URL}/products/${id}`);
+        const data = await https.delete(`/products/${id}`);
         if (data) {
           toast.success(data.data.messgae, {
             position: toast.POSITION.TOP_CENTER,

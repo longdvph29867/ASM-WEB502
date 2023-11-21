@@ -4,10 +4,9 @@ import React, { useState } from "react";
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { validateFormSignUp } from "../../Validations/auth";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { hiddenSpinner, showSpinner } from "../../util/util";
-import { ApiUrls } from "../../constant/constant";
+import { https } from "../../services/config";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -39,15 +38,7 @@ const SignUp = () => {
           fullName: formData.fullName,
           phoneNumber: formData.phoneNumber,
         };
-        const res = await axios.post(
-          `${ApiUrls.API_URL}/auth/register`,
-          newData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const res = await https.post("/auth/register", newData);
         if (res) {
           toast.success("Đăng ký thành công!", {
             position: toast.POSITION.TOP_CENTER,

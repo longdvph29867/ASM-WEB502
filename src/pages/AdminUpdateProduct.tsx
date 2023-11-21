@@ -2,12 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { hiddenSpinner, showSpinner } from "../util/util";
 import Button from "../components/Button";
 import { validateProduct } from "../Validations/product";
-import { ApiUrls } from "../constant/constant";
+import { https } from "../services/config";
 
 const UpdateProduct = () => {
   const params = useParams();
@@ -29,7 +28,7 @@ const UpdateProduct = () => {
     showSpinner();
     try {
       hiddenSpinner();
-      const categories = await axios.get(`${ApiUrls.API_URL}/categories`);
+      const categories = await https.get("/categories");
       setCategoriesList(categories.data.data);
     } catch (error) {
       console.log(error);
@@ -40,9 +39,7 @@ const UpdateProduct = () => {
     showSpinner();
     try {
       hiddenSpinner();
-      const { data } = await axios.get(
-        `${ApiUrls.API_URL}/products/${params.slug}`
-      );
+      const { data } = await https.get(`/products/${params.slug}`);
       const product: Product = data.data;
 
       setFormData({
@@ -92,15 +89,11 @@ const UpdateProduct = () => {
           id_category: formData.id_category,
         };
 
-        const res = await axios.put(
-          `${ApiUrls.API_URL}/products/${params.slug}`,
-          newData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const res = await https.put(`/products/${params.slug}`, newData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         if (res) {
           toast.success("Cập nhật sản phẩm thành công!", {
             position: toast.POSITION.TOP_CENTER,

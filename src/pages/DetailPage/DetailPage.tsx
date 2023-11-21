@@ -8,24 +8,20 @@ import {
   hiddenSpinner,
   showSpinner,
 } from "../../util/util";
-import axios from "axios";
-import { ApiUrls } from "../../constant/constant";
 import ImgDetail from "./ImgDetail";
 import ProductsSame from "../../components/ProductsSame";
+import { https } from "../../services/config";
 
 const DetailPage = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [productsSame, setProductsSame] = useState<Product[]>([]);
-  console.log(
-    "🚀 ~ file: DetailPage.tsx:20 ~ DetailPage ~ productsSame:",
-    productsSame
-  );
+
   const fetchProduct = async () => {
     try {
       showSpinner();
-      const API = `${ApiUrls.API_URL}/products/${slug}`;
-      const { data } = await axios.get(API);
+      const API = `/products/${slug}`;
+      const { data } = await https.get(API);
       hiddenSpinner();
       setProduct(data.data);
     } catch (error) {
@@ -46,8 +42,8 @@ const DetailPage = () => {
       }
       try {
         showSpinner();
-        const API = `${ApiUrls.API_URL}/products?category_id=${product?.id_category}`;
-        const { data } = await axios.get(API);
+        const API = `/products?category_id=${product?.id_category}`;
+        const { data } = await https.get(API);
         hiddenSpinner();
         const newData: Product[] = data.data.filter(
           (item: Product) => item._id !== product?._id

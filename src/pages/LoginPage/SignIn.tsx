@@ -1,6 +1,6 @@
 // type Props = {};
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import { useState } from "react";
 import { localUserService } from "../../services/localService";
@@ -10,7 +10,6 @@ import { validateFormSignIn } from "../../Validations/auth";
 import { https } from "../../services/config";
 
 const SignIn = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormSignInData>({
     account: "",
     password: "",
@@ -45,8 +44,7 @@ const SignIn = () => {
           toast.success("Đăng nhập thành công!", {
             position: toast.POSITION.TOP_CENTER,
           });
-          // window.location.href = "/login";
-          navigate("/");
+          window.location.href = "/";
         }
       } catch (error) {
         hiddenSpinner();

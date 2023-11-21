@@ -27,13 +27,16 @@ const AdminProductsList: React.FC = () => {
       try {
         const data = await https.delete(`/products/${id}`);
         if (data) {
-          toast.success(data.data.messgae, {
+          toast.success(data.data.message, {
             position: toast.POSITION.TOP_CENTER,
           });
           fetchData();
         }
       } catch (error) {
         console.log(error);
+        toast.error(error.response.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
     }
   };

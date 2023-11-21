@@ -12,6 +12,7 @@ import Spinner from "./components/Spinner";
 import AddProduct from "./pages/AdminAddProduct";
 import UpdateProduct from "./pages/AdminUpdateProduct";
 import DetailPage from "./pages/DetailPage/DetailPage";
+import ListProductPage from "./pages/ListProductPage";
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
           <Route
             path="/products/:slug"
             element={<Layout Component={DetailPage} />}
+          />
+          <Route
+            path="/products"
+            element={<Layout Component={ListProductPage} />}
           />
           <Route
             path="/admin/products"

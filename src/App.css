@@ -16,6 +16,9 @@ header.show-mobile .menu-mobile {
   overflow: hidden;
   min-height: 40px;
 }
+.ant-form-item {
+  margin-bottom: 12px !important;
+}
 
 @media (max-width: 768px){
   .container {

@@ -56,13 +56,15 @@ const AdminMenu: React.FC = () => {
                 <li key={index} className="">
                   <a
                     className={`text-sm flex items-center lg:px-4 py-2.5 rounded-lg ${
-                      active ? "bg-white shadow-xl" : ""
+                      active ? "lg:bg-white lg:shadow-xl" : ""
                     } `}
                     href={link}
                   >
                     <div
                       className={`lg:mr-2 flex h-8 w-8 items-center justify-center rounded-lg ${
-                        !active ? "bg-white shadow-lg" : ""
+                        active
+                          ? "lg:bg-transparent lg:shadow-none bg-white shadow-lg"
+                          : ""
                       } `}
                     >
                       {icon}

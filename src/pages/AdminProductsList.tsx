@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { formartCurrency, hiddenSpinner, showSpinner } from "../util/util";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { https } from "../services/config";
+import { message } from "antd";
 
 const AdminProductsList: React.FC = () => {
   const [porudctsList, setPorudctsList] = useState<Product[]>([]);
@@ -27,16 +27,12 @@ const AdminProductsList: React.FC = () => {
       try {
         const data = await https.delete(`/products/${id}`);
         if (data) {
-          toast.success(data.data.message, {
-            position: toast.POSITION.TOP_CENTER,
-          });
+          message.success(data.data.message);
           fetchData();
         }
       } catch (error) {
         console.log(error);
-        toast.error(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        message.error(error.response.data.message);
       }
     }
   };

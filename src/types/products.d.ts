@@ -11,7 +11,7 @@ type Product = {
     gender: string
     rating:number
 }
-type FormProductData = Omit<Product, '_id' | 'slug' | 'createAt' | 'updateAt' | 'rating' | 'images'> & { images: tring}
+type FormProductData = Omit<Product, '_id' | 'slug' | 'createAt' | 'updateAt' | 'rating' | 'images'> & { image: string}
 // type FormProductData = {
 //     name: string,
 //     desc: string,

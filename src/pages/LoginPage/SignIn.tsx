@@ -24,9 +24,15 @@ const SignIn: React.FC = () => {
           localUserService.set(infoUser);
           hiddenSpinner();
           message.success("Đăng nhập thành công!");
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 1200);
+          if (infoUser.role === "admin") {
+            setTimeout(() => {
+              window.location.href = "/admin/products";
+            }, 1200);
+          } else {
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 1200);
+          }
         }
       } catch (error) {
         hiddenSpinner();
@@ -82,7 +88,7 @@ const SignIn: React.FC = () => {
               Đăng nhập
             </Button>
           </Form.Item>
-          <Link to="/login" className="text-xs text-slate-500 mb-3">
+          <Link to="/singup" className="text-xs text-slate-500 mb-3">
             Bạn chưa có tài khoản?
           </Link>
         </div>

@@ -16,13 +16,13 @@ const LoginPage = ({ action }: Props) => {
     `}
       style={{ backgroundImage: `url(${imgBg})` }}
     >
-      <div className="bg-white rounded-xl max-w-3xl w-full max-h-screen z-10 overflow-scroll">
-        <div className=" grid grid-cols-2 gap-5">
-          <div className=" p-5 pr-0">
+      <div className="bg-white rounded-xl md:max-w-3xl w-full max-w-md max-h-screen z-10 overflow-scroll">
+        <div className=" grid md:grid-cols-2 gap-5">
+          <div className=" p-5 md:pr-0">
             {action === "login" ? <SignIn /> : <SignUp />}
           </div>
           <div
-            className="bg-cover bg-center min-h-[458px]"
+            className="bg-cover bg-center min-h-[458px] md:block hidden"
             style={{ backgroundImage: `url(${imgBgForm})` }}
           ></div>
         </div>

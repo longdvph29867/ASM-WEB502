@@ -1,6 +1,6 @@
 const USER_INFO_SHOP = 'USER_INFO_SHOP';
 export const localUserService = {
-  get: (): ObjString |null => {
+  get: (): ObjString | null => {
     const jsonData = localStorage.getItem(USER_INFO_SHOP);
     return JSON.parse((jsonData as string));
   },

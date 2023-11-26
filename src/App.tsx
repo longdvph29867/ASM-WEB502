@@ -13,8 +13,24 @@ import AddProduct from "./pages/AdminAddProduct";
 import UpdateProduct from "./pages/AdminUpdateProduct";
 import DetailPage from "./pages/DetailPage/DetailPage";
 import ListProductPage from "./pages/ListProductPage";
+import { useEffect } from "react";
+import { localUserService } from "./services/localService";
 
 function App() {
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      // Xử lý trước khi cửa sổ trình duyệt được đóng hoặc trang web được làm mới
+      localUserService.remove();
+    };
+
+    // Đăng ký sự kiện beforeunload khi component được mount
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Hủy đăng ký sự kiện khi component bị unmount
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
   return (
     <>
       <Spinner />

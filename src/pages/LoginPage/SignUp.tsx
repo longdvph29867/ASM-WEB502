@@ -1,138 +1,151 @@
 // type Props = {};
 
-import React, { useState } from "react";
-import Button from "../../components/Button";
+import React from "react";
+import { Button, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { validateFormSignUp } from "../../Validations/auth";
-import { toast } from "react-toastify";
 import { hiddenSpinner, showSpinner } from "../../util/util";
 import { https } from "../../services/config";
 
-const SignUp = () => {
+const SignUp: React.FC = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<FormSignUpData>({
-    account: "",
-    password: "",
-    fullName: "",
-    phoneNumber: "",
-    rePassword: "",
-  });
-  const [errors, setErrors] = useState<Partial<FormSignUpData>>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const validationErrors = validateFormSignUp(formData);
-    if (Object.keys(validationErrors).length !== 0) {
-      setErrors(validationErrors);
-    } else {
+  const onFinish = (values: FormSignUpData) => {
+    const data = {
+      account: values.account,
+      password: values.password,
+      fullName: values.fullName,
+      email: values.email,
+    };
+    console.log(data);
+    const postProduct = async () => {
       showSpinner();
       try {
-        const newData = {
-          account: formData.account,
-          password: formData.password,
-          fullName: formData.fullName,
-          phoneNumber: formData.phoneNumber,
-        };
-        const res = await https.post("/auth/register", newData);
+        const res = await https.post("/auth/register", data);
         if (res) {
-          toast.success("Đăng ký thành công!", {
-            position: toast.POSITION.TOP_CENTER,
-          });
+          message.success("Đăng ký thành công!");
           navigate("/login");
           hiddenSpinner();
         }
       } catch (error) {
         hiddenSpinner();
-        toast.error(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        message.error(error.response.data.message);
         console.log(error);
       }
-    }
+    };
+    postProduct();
+  };
+
+  const onFinishFailed = (errorInfo: unknown) => {
+    console.log("Failed:", errorInfo);
   };
 
   return (
     <div>
       <h3 className=" text-2xl text-slate-700 mb-1">Đăng ký</h3>
-      <form onSubmit={handleSubmit} className="flex flex-col text-[#333]">
-        <div className="flex flex-col mb-2">
-          <label className="text-sm" htmlFor="">
-            Tài khoản
-          </label>
-          <input
-            type="text"
-            name="account"
-            onChange={handleChange}
-            value={formData.account}
-            className="text-[#666] border border-gray-300 bg-[#f7f7f7] text-base px-2 py-1 outline-none focus:border-slate-500 mt-1 focus:bg-white rounded"
-          />
-          <small className="text-sm text-red-500">{errors?.account}</small>
-        </div>
-        <div className="flex flex-col mb-2">
-          <label className="text-sm" htmlFor="">
-            Họ tên
-          </label>
-          <input
-            type="text"
-            name="fullName"
-            onChange={handleChange}
-            value={formData.fullName}
-            className="text-[#666] border border-gray-300 bg-[#f7f7f7] text-base px-2 py-1 outline-none focus:border-slate-500 mt-1 focus:bg-white rounded"
-          />
-          <small className="text-sm text-red-500">{errors?.fullName}</small>
-        </div>
-        <div className="flex flex-col mb-2">
-          <label className="text-sm" htmlFor="">
-            Số điện thoại
-          </label>
-          <input
-            type="text"
-            name="phoneNumber"
-            onChange={handleChange}
-            value={formData.phoneNumber}
-            className="text-[#666] border border-gray-300 bg-[#f7f7f7] text-base px-2 py-1 outline-none focus:border-slate-500 mt-1 focus:bg-white rounded"
-          />
-          <small className="text-sm text-red-500">{errors?.phoneNumber}</small>
-        </div>
-        <div className="flex flex-col mb-2">
-          <label className="text-sm" htmlFor="mat_khau">
-            Mật khẩu
-          </label>
-          <input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            value={formData.password}
-            className="text-[#666] border-gray-300 bg-[#f7f7f7] text-base px-2 py-1 outline-none focus:border-slate-500 mt-1 focus:bg-white rounded"
-            style={{ borderWidth: 1 }}
-          />
-          <small className="text-sm text-red-500">{errors?.password}</small>
-        </div>
-        <div className="flex flex-col mb-2">
-          <label className="text-sm" htmlFor="">
-            Nhập lại mật khẩu
-          </label>
-          <input
-            type="password"
-            name="rePassword"
-            onChange={handleChange}
-            value={formData.rePassword}
-            className="text-[#666] border border-gray-300 bg-[#f7f7f7] text-base px-2 py-1 outline-none focus:border-slate-500 mt-1 focus:bg-white rounded"
-          />
-          <small className="text-sm text-red-500">{errors?.rePassword}</small>
-        </div>
-        <div className="flex justify-between sm:items-end items-start gap-1  sm:flex-row flex-col">
-          <Button>Đăng ký</Button>
-          <Link to="/login" className="text-xs text-slate-500">
+      <Form
+        layout="vertical"
+        name="basic"
+        labelCol={{ span: 12 }}
+        wrapperCol={{ span: 24 }}
+        style={{ maxWidth: 600 }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+        requiredMark={false}
+      >
+        <Form.Item
+          label="Tài khoản"
+          name="account"
+          rules={[
+            { required: true, message: "Vui lòng nhập trường này!" },
+            {
+              min: 6,
+              max: 25,
+              message: "Tài khoản phải từ 6 đến 25 ký tự!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Họ tên"
+          name="fullName"
+          rules={[
+            { required: true, message: "Vui lòng nhập trường này!" },
+            {
+              min: 6,
+              max: 25,
+              message: "Họ tên phải từ 6 đến 25 ký tự!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            { required: true, message: "Vui lòng nhập trường này!" },
+            {
+              pattern:
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: "Email không hợp lệ!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Mật khẩu"
+          name="password"
+          rules={[
+            { required: true, message: "Vui lòng nhập trường này!" },
+            {
+              min: 6,
+              max: 25,
+              message: "Mật khẩu phải từ 6 đến 25 ký tự!",
+            },
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          label="Nhập lại mật khẩu"
+          name="rePassword"
+          rules={[
+            { required: true, message: "Vui lòng nhập trường này!" },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject("Mật khẩu không khớp!");
+              },
+            }),
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+        <div className="flex justify-between sm:items-end items-start gap-1 sm:flex-row flex-col pt-2">
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="text-white bg-slate-800"
+            >
+              Thêm mới
+            </Button>
+          </Form.Item>
+          <Link to="/login" className="text-xs text-slate-500 mb-3">
             Bạn đã có tài khoản?
           </Link>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };

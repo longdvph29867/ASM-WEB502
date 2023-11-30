@@ -6,6 +6,10 @@ import { message } from "antd";
 
 const AdminProductsList: React.FC = () => {
   const [porudctsList, setPorudctsList] = useState<Product[]>([]);
+  console.log(
+    "🚀 ~ file: AdminProductsList.tsx:9 ~ porudctsList:",
+    porudctsList
+  );
 
   const fetchData = async () => {
     showSpinner();
@@ -49,7 +53,7 @@ const AdminProductsList: React.FC = () => {
       </div>
       <div className="h-full overflow-x-auto">
         <div className="w-full border-gray-200 text-slate-500">
-          <div className="w-full grid lg:grid-cols-8 sm:grid-cols-5 grid-cols-2 gap-2">
+          <div className="w-full grid lg:grid-cols-9 sm:grid-cols-5 grid-cols-2 gap-2">
             <div className="pr-6 pl-4 py-3  text-left font-bold uppercase text-slate-800">
               Ảnh
             </div>
@@ -62,6 +66,9 @@ const AdminProductsList: React.FC = () => {
             <div className="sm:block hidden pr-6 pl-2 py-3  text-left font-bold uppercase text-slate-800">
               Giá
             </div>
+            <div className="lg:block hidden pr-6 pl-2 py-3  text-left font-bold uppercase text-slate-800">
+              Danh mục
+            </div>
             <div className="sm:block hidden pr-6 pl-2 py-3  text-left font-bold uppercase text-slate-800">
               Thao tác
             </div>
@@ -71,7 +78,7 @@ const AdminProductsList: React.FC = () => {
               return (
                 <div
                   key={index}
-                  className="grid lg:grid-cols-8 sm:grid-cols-5 grid-cols-2 gap-2 border-b sm:border-transparent border-slate-300"
+                  className="grid lg:grid-cols-9 sm:grid-cols-5 grid-cols-2 gap-2 border-b sm:border-transparent border-slate-300"
                 >
                   <div className="p-2">
                     <div className="px-2 py-1 min-w-[110px]">
@@ -92,12 +99,17 @@ const AdminProductsList: React.FC = () => {
                     </div>
                   </div>
                   <div className="lg:block hidden p-2 col-span-3">
-                    <p className="text-sm ">{product.desc.slice(0, 150)}...</p>
+                    <p className="text-sm ">{product.desc?.slice(0, 150)}...</p>
                   </div>
                   <div className="p-2">
                     <span className="text-sm font-semibold text-slate-400">
                       {formartCurrency(product.price)}
                     </span>
+                  </div>
+                  <div className="lg:block hidden p-2">
+                    <p className="text-sm ">
+                      {product.id_category?.categoryName}
+                    </p>
                   </div>
                   <div className="p-2 space-x-2">
                     <Link

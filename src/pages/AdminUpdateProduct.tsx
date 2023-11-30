@@ -63,7 +63,7 @@ const UpdateProduct: React.FC = () => {
       desc: values.desc,
       gender: values.gender,
       id_category: values.id_category,
-      images: [values.image],
+      // images: [values.image],
       name: values.name,
       price: values.price,
     };

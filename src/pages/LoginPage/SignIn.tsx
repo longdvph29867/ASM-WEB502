@@ -65,7 +65,14 @@ const SignIn: React.FC = () => {
         <Form.Item
           label="Email"
           name="email"
-          rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập trường này!" },
+            {
+              pattern:
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: "Email không hợp lệ!",
+            },
+          ]}
         >
           <Input />
         </Form.Item>

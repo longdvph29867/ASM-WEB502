@@ -1,24 +1,15 @@
 type Product = {
-    _id: ObjectId,
+    _id: string,
     name: string,
     desc: string,
     images: string[],
     price: number,
     slug: string,
-    id_category: ObjectId,
+    id_category: {_id: string, categoryName: string},
     createAt: string,
     updateAt: string,
     gender: string
     rating:number
 }
-type FormProductData = Omit<Product, '_id' | 'slug' | 'createAt' | 'updateAt' | 'rating' | 'images'> & { image: string}
-// type FormProductData = {
-//     name: string,
-//     desc: string,
-//     images: string,
-//     price: string,
-//     id_category: ObjectId,
-//     gender: string
-// }
+type FormProductData = Pick<Product, 'desc' | 'gender' | 'name' | 'price'> & {images: File[], id_category: string}
 
-type ValidProduct = Partial<Omit<FormProductData, 'price'>> & {price?: string}

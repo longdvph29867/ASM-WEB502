@@ -1,5 +1,15 @@
 // type Props = {};
-import { Button, Form, Input, InputNumber, Radio, Select, message } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Radio,
+  Select,
+  Upload,
+  message,
+} from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { hiddenSpinner, showSpinner } from "../util/util";
@@ -19,16 +29,29 @@ const AddProduct: React.FC = () => {
   }, []);
 
   const onFinish = (values: FormProductData) => {
-    const data = {
-      desc: values.desc,
-      gender: values.gender,
-      id_category: values.id_category,
-      images: [values.image],
-      name: values.name,
-      price: values.price,
-    };
     const postProduct = async () => {
+      const listFiles = values.images;
+      const newArrayFiles = listFiles.map((file: any) => file.originFileObj);
+      console.log(listFiles);
+
+      console.log(newArrayFiles);
+      const formData = new FormData();
+      for (const file of newArrayFiles) {
+        formData.append("images", file);
+      }
       try {
+        const { data: dataImages } = await https.post("/images", formData);
+        const urlImages: { url: string; publicId: string }[] = dataImages.data;
+
+        const data = {
+          desc: values.desc,
+          gender: values.gender,
+          id_category: values.id_category,
+          images: urlImages.map((image) => image.url),
+          name: values.name,
+          price: values.price,
+        };
+        console.log(data);
         showSpinner();
         const res = await https.post("/products", data);
         if (res) {
@@ -82,14 +105,49 @@ const AddProduct: React.FC = () => {
           <InputNumber style={{ width: "100%" }} />
         </Form.Item>
 
+        {/*  */}
         <Form.Item
           label="Hình ảnh"
-          name="image"
-          rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
+          name="images"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => e?.fileList}
+          rules={[
+            { required: true, message: "Vui lòng chọn file!" },
+            {
+              validator(_, fileList) {
+                if (fileList.length > 5) {
+                  return Promise.reject("Tối đa 5 file!");
+                }
+                for (const file of fileList) {
+                  if (file.size > 1024 * 1024) {
+                    return Promise.reject("File tối đa 1MB");
+                  }
+                  if (
+                    !["image/jpeg", "image/jpg", "image/png"].includes(
+                      file.type
+                    )
+                  ) {
+                    return Promise.reject(
+                      "File phải có định dạng png, jpg, jpeg!"
+                    );
+                  }
+                }
+                // else if(['image/jpeg', 'image/jpg', 'image/png'].includes())
+                return Promise.resolve();
+              },
+            },
+          ]}
         >
-          <Input />
+          <Upload.Dragger
+            multiple
+            listType="picture"
+            beforeUpload={() => false}
+          >
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          </Upload.Dragger>
         </Form.Item>
 
+        {/*  */}
         <Form.Item
           label="Mô tả"
           name="desc"

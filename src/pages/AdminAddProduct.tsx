@@ -37,6 +37,7 @@ const AddProduct: React.FC = () => {
       for (const file of newArrayFiles) {
         formData.append("images", file);
       }
+      showSpinner();
       try {
         const { data: dataImages } = await https.post("/images", formData);
         const urlImages: { url: string; publicId: string }[] = dataImages.data;
@@ -49,7 +50,6 @@ const AddProduct: React.FC = () => {
           name: values.name,
           price: values.price,
         };
-        showSpinner();
         const res = await https.post("/products", data);
         if (res) {
           message.success("Thêm sản phẩm thành công!");

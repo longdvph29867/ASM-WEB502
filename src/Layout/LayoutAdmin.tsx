@@ -2,11 +2,15 @@ import { FC } from "react";
 import User from "../components/User";
 import Search from "../components/Search";
 import AdminMenu from "../components/AdminMenu";
+import { localUserService } from "../services/localService";
 type Props = {
   Component: FC;
 };
 
 function LayoutAdmin({ Component }: Props) {
+  if (localUserService.get()?.role !== "admin") {
+    window.location.href = "/";
+  }
   return (
     <div className="flex min-h-screen w-full bg-[#f8f9fa]">
       <AdminMenu />

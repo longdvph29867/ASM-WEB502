@@ -32,9 +32,7 @@ const AddProduct: React.FC = () => {
     const postProduct = async () => {
       const listFiles = values.images;
       const newArrayFiles = listFiles.map((file: any) => file.originFileObj);
-      console.log(listFiles);
 
-      console.log(newArrayFiles);
       const formData = new FormData();
       for (const file of newArrayFiles) {
         formData.append("images", file);
@@ -51,7 +49,6 @@ const AddProduct: React.FC = () => {
           name: values.name,
           price: values.price,
         };
-        console.log(data);
         showSpinner();
         const res = await https.post("/products", data);
         if (res) {
@@ -61,8 +58,8 @@ const AddProduct: React.FC = () => {
         }
       } catch (error) {
         hiddenSpinner();
-        message.error(error.response.data.message);
         console.log(error);
+        message.error(error.response.data.message);
       }
     };
     postProduct();
@@ -115,24 +112,26 @@ const AddProduct: React.FC = () => {
             { required: true, message: "Vui lòng chọn file!" },
             {
               validator(_, fileList) {
-                if (fileList.length > 5) {
-                  return Promise.reject("Tối đa 5 file!");
-                }
-                for (const file of fileList) {
-                  if (file.size > 1024 * 1024) {
-                    return Promise.reject("File tối đa 1MB");
+                if (fileList) {
+                  if (fileList.length > 5) {
+                    return Promise.reject("Tối đa 5 file!");
                   }
-                  if (
-                    !["image/jpeg", "image/jpg", "image/png"].includes(
-                      file.type
-                    )
-                  ) {
-                    return Promise.reject(
-                      "File phải có định dạng png, jpg, jpeg!"
-                    );
+                  for (const file of fileList) {
+                    if (file.size > 1024 * 1024) {
+                      return Promise.reject("File tối đa 1MB");
+                    }
+                    if (
+                      !["image/jpeg", "image/jpg", "image/png"].includes(
+                        file.type
+                      )
+                    ) {
+                      return Promise.reject(
+                        "File phải có định dạng png, jpg, jpeg!"
+                      );
+                    }
                   }
+                  return Promise.resolve();
                 }
-                // else if(['image/jpeg', 'image/jpg', 'image/png'].includes())
                 return Promise.resolve();
               },
             },

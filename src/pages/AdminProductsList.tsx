@@ -6,10 +6,6 @@ import { message } from "antd";
 
 const AdminProductsList: React.FC = () => {
   const [porudctsList, setPorudctsList] = useState<Product[]>([]);
-  console.log(
-    "🚀 ~ file: AdminProductsList.tsx:9 ~ porudctsList:",
-    porudctsList
-  );
 
   const fetchData = async () => {
     showSpinner();

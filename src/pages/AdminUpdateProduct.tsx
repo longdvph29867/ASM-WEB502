@@ -1,7 +1,18 @@
 // type Props = {};
 
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, InputNumber, Radio, Select, message } from "antd";
+import {
+  Button,
+  Form,
+  Image,
+  Input,
+  InputNumber,
+  Radio,
+  Select,
+  Upload,
+  message,
+} from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { hiddenSpinner, showSpinner } from "../util/util";
 import { https } from "../services/config";
@@ -12,6 +23,7 @@ const UpdateProduct: React.FC = () => {
   const navigate = useNavigate();
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
   const [form] = Form.useForm();
+  const [imageList, setImageList] = useState<string[]>([]);
 
   const fetchCategoryes = async () => {
     showSpinner();
@@ -33,11 +45,13 @@ const UpdateProduct: React.FC = () => {
       form.setFieldsValue({
         name: product.name,
         price: product.price,
-        image: product.images[0],
         desc: product.desc,
         gender: product.gender,
         id_category: product.id_category,
       });
+      // console.log(form.getFieldValue());
+
+      setImageList(product.images);
 
       // setFormData({
       //   ...formData,
@@ -59,17 +73,35 @@ const UpdateProduct: React.FC = () => {
   }, [slug]);
 
   const onFinish = (values: FormProductData) => {
-    const data = {
-      desc: values.desc,
-      gender: values.gender,
-      id_category: values.id_category,
-      // images: [values.image],
-      name: values.name,
-      price: values.price,
-    };
     const putProduct = async () => {
+      let urlImages: string[] = [];
+      showSpinner();
+      if (values.images?.length > 0) {
+        const listFiles = values.images;
+        const newArrayFiles = listFiles.map((file: any) => file.originFileObj);
+
+        const formData = new FormData();
+        for (const file of newArrayFiles) {
+          formData.append("images", file);
+        }
+        const { data: dataImages } = await https.post("/images", formData);
+        urlImages = dataImages.data.map(
+          (image: { url: string; publicId: string }) => image.url
+        );
+      } else {
+        urlImages = imageList;
+      }
+
+      const data = {
+        desc: values.desc,
+        gender: values.gender,
+        id_category: values.id_category,
+        images: urlImages,
+        name: values.name,
+        price: values.price,
+      };
+
       try {
-        showSpinner();
         const res = await https.put(`/products/${slug}`, data);
         if (res) {
           message.success("Cập nhật sản phẩm thành công!");
@@ -123,14 +155,56 @@ const UpdateProduct: React.FC = () => {
           <InputNumber style={{ width: "100%" }} />
         </Form.Item>
 
+        {/*  */}
         <Form.Item
           label="Hình ảnh"
-          name="image"
-          rules={[{ required: true, message: "Vui lòng nhập trường này!" }]}
+          name="images"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => e?.fileList}
+          rules={[
+            { required: false, message: "Vui lòng chọn file!" },
+            {
+              validator(_, fileList) {
+                if (fileList) {
+                  if (fileList.length > 5) {
+                    return Promise.reject("Tối đa 5 file!");
+                  }
+                  for (const file of fileList) {
+                    if (file.size > 1024 * 1024) {
+                      return Promise.reject("File tối đa 1MB");
+                    }
+                    if (
+                      !["image/jpeg", "image/jpg", "image/png"].includes(
+                        file.type
+                      )
+                    ) {
+                      return Promise.reject(
+                        "File phải có định dạng png, jpg, jpeg!"
+                      );
+                    }
+                  }
+                  return Promise.resolve();
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
         >
-          <Input />
+          <Upload.Dragger
+            multiple
+            listType="picture"
+            beforeUpload={() => false}
+          >
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          </Upload.Dragger>
         </Form.Item>
+        <div className="grid grid-cols-4 gap-2">
+          {imageList.map((image, index) => (
+            <Image key={index} width={100} src={image} />
+          ))}
+        </div>
 
+        {/*  */}
         <Form.Item
           label="Mô tả"
           name="desc"
